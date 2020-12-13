@@ -7,6 +7,8 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
+    "build:ios": "detox build -c ios",
+    "test:e2e:ios": "detox test -c ios",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
@@ -17,20 +19,28 @@
     "@babel/core": "^7.8.4",
     "@babel/runtime": "^7.8.4",
     "@react-native-community/eslint-config": "^1.1.0",
+    "@testing-library/jest-native": "^3.4.3",
+    "@testing-library/react-native": "^7.1.0",
+    "@types/detox": "^16.4.2",
     "@types/jest": "^25.2.3",
     "@types/react-native": "^0.63.2",
     "@types/react-test-renderer": "^16.9.2",
     "@typescript-eslint/eslint-plugin": "^2.27.0",
     "@typescript-eslint/parser": "^2.27.0",
     "babel-jest": "^25.1.0",
+    "detox": "^17.14.4",
     "eslint": "^6.5.1",
-    "jest": "^25.1.0",
+    "jest": "^26.6.3",
+    "jest-circus": "^26.6.3",
     "metro-react-native-babel-preset": "^0.59.0",
     "react-test-renderer": "16.13.1",
     "typescript": "^3.8.3"
   },
   "jest": {
     "preset": "react-native",
+    "setupFilesAfterEnv": [
+      "@testing-library/jest-native/extend-expect"
+    ],
     "moduleFileExtensions": [
       "ts",
       "tsx",
