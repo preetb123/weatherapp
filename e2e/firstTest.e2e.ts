@@ -16,6 +16,6 @@ describe('Example', () => {
 
   it('should come back to home after tapping back button on search screen', async () => {
     await element(by.id('back')).tap();
-    await expect(element(by.text('HomeScreen'))).toBeVisible();
+    await expect(element(by.id('home'))).toBeVisible();
   });
 });

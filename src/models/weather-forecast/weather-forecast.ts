@@ -110,7 +110,7 @@ export const WeatherForecastModel = types
     /**
      * Wind direction, degrees (meteorological)
      */
-    deg: types.maybe(types.number),
+    deg: types.number,
     /**
      * Cloudiness, %
      */
@@ -143,6 +143,19 @@ export const WeatherForecastModel = types
     },
     get humidityInPercent() {
       return self.humidity + '%';
+    },
+    cardinalDirection() {
+      const directions = [
+        '↑ N',
+        '↗ NE',
+        '→ E',
+        '↘ SE',
+        '↓ S',
+        '↙ SW',
+        '← W',
+        '↖ NW',
+      ];
+      return directions[Math.round(self.deg! / 45) % 8];
     },
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions((self) => ({})); // eslint-disable-line @typescript-eslint/no-unused-vars

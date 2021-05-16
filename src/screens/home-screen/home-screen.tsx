@@ -1,39 +1,79 @@
-import { useNavigation } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import React, { useEffect } from 'react';
-import { Text, Button, View, StatusBar, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import {
+  Text,
+  Button,
+  View,
+  StyleSheet,
+  Alert,
+  Linking,
+  ActivityIndicator,
+} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Screen } from '../../components/screen/screen';
 import { useStores } from '../../models';
+
 import { color, spacing } from '../../theme';
+import { useCurrentCity } from '../../services/useCurrentCity';
+import { TodaysWeatherItem } from '../../components/todays-weather/todays-weather-item';
 
 export const HomeScreen = observer(() => {
   const navigation = useNavigation();
   const store = useStores();
+  const [
+    currentCity,
+    formattedAddress,
+    addressLoading,
+    geocodeError,
+  ] = useCurrentCity();
+  console.log('checking city info');
 
   useEffect(() => {
-    if (store.weatherForecasts.length === 0) {
-      console.log('getting forecast');
-      store.getWeatherForecast('Kolhapur');
+    if (currentCity) {
+      store.setCityInfo(currentCity, formattedAddress);
     }
-  }, []);
+  }, [currentCity]);
+
+  if (!currentCity) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center' }}>
+        <ActivityIndicator size="small" />
+      </View>
+    );
+  }
+
+  if (store.isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center' }}>
+        <ActivityIndicator size="small" />
+        <Text>Fetching weather forecast</Text>
+      </View>
+    );
+  }
+
+  console.log('data loading boolean: ');
 
   const searcScreen = () => navigation.navigate('search');
 
-  if (store.weatherForecasts.length === 0) return null;
-  console.log('loaded', store.weatherForecasts.length);
+  console.log('homescreen render');
 
   return (
-    <View testID="home" style={{ flex: 1 }}>
-      <Screen style={styles.screenStyle}>
-        <Text>HomeScreen</Text>
+    <View testID="home" style={styles.container}>
+      <Screen
+        style={styles.screenStyle}
+        preset="fixed"
+        backgroundColor={color.transparent}>
+        <Text>{store.cityInfo?.city}</Text>
         <Button testID="searchButton" onPress={searcScreen} title="Search" />
-        <ScrollView style={styles.scrollContainer}>
+        <TodaysWeatherItem />
+        <ScrollView>
           {store.weatherForecasts.map((forecast) => (
             <View key={forecast.dt} style={styles.forecastItem}>
               <Text>{forecast.forecastedAt}</Text>
               <Text>{forecast.currentTemperature}</Text>
               <Text>{`Humidity: ${forecast.humidityInPercent}`}</Text>
+              <Text>{`Wind: ${forecast.cardinalDirection()}`}</Text>
             </View>
           ))}
         </ScrollView>
@@ -51,5 +91,7 @@ const styles = StyleSheet.create({
     marginVertical: 4,
     backgroundColor: color.palette.lighterGrey,
   },
-  scrollContainer: {},
+  container: {
+    flex: 1,
+  },
 });

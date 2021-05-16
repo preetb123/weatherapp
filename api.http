@@ -1,1 +1,31 @@
+// Weather forecast request using city name
 GET api.openweathermap.org/data/2.5/forecast/daily?q=new+delhi&cnt=14&units=metric&appid=96935ebfcd43947f79a903ed302a9d21
+
+### with reverse geocoded data
+
+GET api.openweathermap.org/data/2.5/forecast/daily?q=solapur&cnt=14&units=metric&appid=96935ebfcd43947f79a903ed302a9d21
+
+###
+
+// Weather forecast request using lat, long: DOESNT WORK
+GET api.openweathermap.org/data/2.5/forecast/daily?lat=-33.8599358&long=151.2090295&cnt=10&units=metric&appid=96935ebfcd43947f79a903ed302a9d21
+#GET api.openweathermap.org/data/2.5/forecast/daily?lat=35&lon=139&cnt=10&units=metric&appid=96935ebfcd43947f79a903ed302a9d21
+
+###
+
+// google places autocomplete
+
+ GET https://maps.googleapis.com/maps/api/place/autocomplete/json?input=kolhap&key=AIzaSyDJVEEgN2_i-NoPFSgAxdbpvXzwQa3H02s
+
+### reverse geocode api
+
+https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=AIzaSyDJVEEgN2_i-NoPFSgAxdbpvXzwQa3H02s
+
+
+### reverse geocode api filtered by result_type
+
+https://maps.googleapis.com/maps/api/geocode/json?latlng=18.0928931,75.4085297&result_type=locality&key=AIzaSyDJVEEgN2_i-NoPFSgAxdbpvXzwQa3H02s
+
+###
+https://maps.googleapis.com/maps/api/geocode/json?latlng=37.785834,-122.406417&result_type=locality&key=AIzaSyDJVEEgN2_i-NoPFSgAxdbpvXzwQa3H02s
+

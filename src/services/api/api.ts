@@ -2,6 +2,7 @@ import { ApisauceInstance, create, ApiResponse } from 'apisauce';
 import { getGeneralApiProblem } from './api-problem';
 import { ApiConfig, DEFAULT_API_CONFIG } from './api-config';
 import * as Types from './api.types';
+import { OPEN_WEATHER_MAP_API } from '@env';
 
 /**
  * Manages all requests to the API.
@@ -54,7 +55,7 @@ export class Api {
     // make the api call
     const response: ApiResponse<any> = await this.apisauce.get(
       encodeURI(
-        `/data/2.5/forecast/daily?q=${city}&cnt=14&units=metric&appid=96935ebfcd43947f79a903ed302a9d21`,
+        `/data/2.5/forecast/daily?q=${city}&cnt=14&units=metric&appid=${OPEN_WEATHER_MAP_API}`,
       ),
     );
 
